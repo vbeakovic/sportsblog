@@ -1,0 +1,11 @@
+{
+  "name": "sportsblog",
+  "version": "1.0.0",
+  "description": "A sports blog",
+  "main": "app.js",
+  "scripts" : {
+    "start": "node app"
+  },
+  "author": "Valter Beaković",
+  "license": "MIT"
+}
