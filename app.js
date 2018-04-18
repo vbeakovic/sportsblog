@@ -5,17 +5,22 @@ const session = require('express-session');
 const { check, validationResult } = require('express-validator/check');
 const { matchedData, sanitize } = require('express-validator/filter');
 
+// port
+const port = 3000;
 
 // init
 const app = express();
 
-// port
-const port = 3000;
+// Import routes
+const index = require('./routes/index');
+const articles = require('./routes/articles');
+const categories = require('./routes/categories');
+const manage = require('./routes/manage');
 
 
 // View Setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view-engine', 'ejs');
+app.set('view engine', 'ejs');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -23,6 +28,12 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 // Static files folder
 app.use(express.static(path.join(__dirname, 'public')));
+
+// External css and js
+app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
+app.use('/js', express.static(__dirname + '/node_modules/popper.js/dist/umd')); // redirect JS jQuery
+app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
+app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 
 // Messages middleware
 app.use(require('connect-flash')());
@@ -75,10 +86,11 @@ app.post('/user', [
   createUser(user).then(user => res.json(user));
 });
 
-// Temporary Get
-app.get('/', (req, res, next) => {
-  res.send('Hello');
-})
+// Routes
+app.use('/', index);
+app.use('/articles', articles);
+app.use('/categories', categories);
+app.use('/manage', manage);
 
 // Start listening
 app.listen(port, () => {
