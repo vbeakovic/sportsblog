@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
-  res.send('CATEGORIES');
+  res.render('categories', {
+    title: 'Categories'
+  });
 });
 
 module.exports = router;
