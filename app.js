@@ -4,6 +4,11 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const { check, validationResult } = require('express-validator/check');
 const { matchedData, sanitize } = require('express-validator/filter');
+const mongoose = require('mongoose');
+
+// Mongoose connect
+mongoose.connect('mongodb://localhost/sportsblog');
+const db = mongoose.connection;
 
 // port
 const port = 3000;
