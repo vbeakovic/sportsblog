@@ -1,9 +1,67 @@
 <% include ../views/partials/header %>
-<h1><%= title %></h1>
+
 <div class="row">
-  <div class="col-md-5">
+  <div class="col-md-9">
+    <h1><%= title %></h1>
   </div>
-  <div class="col-md-7">
+  <div class="col-md-3">
+    <a class="btn btn-light btn-sm add-category float-right" href="/manage/articles/add">Add Article</a>
   </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Article Title</th>
+          <th scope="col">Date Published</th>
+          <th scope="col">Author</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% articles.forEach(function(article){ %>
+          <tr>
+            <td>
+              <%= article.title %>
+            </td>
+            <td>
+              <%= moment(article.created_at).format('MMMM Do YYYY, h:mm:ss a') %>
+            </td>
+            <td>
+              <%= article.author %>
+            </td>
+            <td>
+              <a class="btn  btn-sm float-right" href="/manage/articles/edit/<%= article._id %>">Edit</a>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="alert alert-warning alert-dismissible fade show" role="alert" style="display:none;">
+  <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal" id="getCodeModal" tabindex="-1" role="dialog">
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Modal title</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" id="getCode">
+      <p>Modal body text goes here.</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
 </div>
 <% include ../views/partials/footer %>

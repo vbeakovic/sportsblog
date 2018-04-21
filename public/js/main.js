@@ -18,6 +18,25 @@ $(document).ready(() => {
       }
     });
   });
+  $('.article-delete').on('click', (e) => {
+    $target = $(e.target);
+    const id = $target.attr('data-article-id');
+    $.ajax({
+      type: 'DELETE',
+      url: '/articles/delete/' + id,
+      success: (response) => {
+        //alert('Deleting Todo');
+        console.log(response);
+        //$("#getCode").html(response);
+        //$("#getCodeModal").modal('show');
+        //window.location.href = '/';
+        //$('.alert').show();
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+  });
   //$('#getCodeModal').on('hidden.bs.modal', function (e) {
   //  window.location.href = '/manage/categories';
 });

@@ -37,4 +37,38 @@ router.post('/add', (req, res, next) => {
   });
 });
 
+// Update article - POST
+router.post('/edit/:id', (req, res, next) => {
+  let article = new Article();
+  const query = {_id: req.params.id};
+  const update = {
+    title: req.body.title,
+    subtitle: req.body.subtitle,
+    category: req.body.category,
+    body: req.body.body,
+    author: req.body.author
+  }
+
+  Article.updateArticle(query, update, {}, (err, article) => {
+    if (err) {
+      res.send(err);
+    }
+    res.redirect('/manage/articles');
+  });
+});
+
+// Delete article - DELETE
+router.delete('/delete/:id', (req, res, next) => {
+  const query = {_id: req.params.id};
+
+  Article.removeArticle(query, (err, article) => {
+    if (err) {
+      res.send(err);
+          console.log('Test2');
+    }
+    res.sendStatus(200);
+    console.log('Test');
+  });
+});
+
 module.exports = router;
