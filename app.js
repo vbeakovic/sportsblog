@@ -27,6 +27,9 @@ const manage = require('./routes/manage');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// Moment
+app.locals.moment = require('moment');
+
 // Body parser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
