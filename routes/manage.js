@@ -23,7 +23,16 @@ router.get('/categories', (req, res, next) => {
 
 
 router.get('/articles/add', (req, res, next) => {
-  res.render('add_article', { title: 'Create Article'});
+  Category.getCategories((err, categories) => {
+    if (err) {
+      res.send(err);
+    }
+    res.render('add_article',
+    {
+      title: 'Create Article',
+      categories: categories
+    });
+  });
 });
 
 router.get('/categories/add', (req, res, next) => {
