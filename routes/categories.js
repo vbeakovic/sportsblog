@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const { check, validationResult } = require('express-validator/check');
+const { matchedData, sanitize } = require('express-validator/filter');
 
 Category = require('../models/category.js');
 
@@ -15,6 +17,7 @@ router.get('/', (req, res, next) => {
     });
   });
 });
+
 
 // Add category - POST
 router.post('/add', (req, res, next) => {
