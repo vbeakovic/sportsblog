@@ -10,7 +10,8 @@ $(document).ready(() => {
         console.log(response);
         //$("#getCode").html(response);
         //$("#getCodeModal").modal('show');
-        //window.location.href = '/';
+        //window.location.href = '/manage/categories';
+        //$('<div class="alert alert-success" role="alert">A simple success alert—check it out!</div>').insertAfter('div.first');
         //$('.alert').show();
       },
       error: (error) => {
