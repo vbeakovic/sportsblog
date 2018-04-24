@@ -58,7 +58,6 @@ router.get('/categories/edit/:id', (req, res, next) => {
       title: 'Edit Category',
       category: category
     });
-    console.log(category);
   });
 
 });
