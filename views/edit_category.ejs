@@ -3,8 +3,9 @@
 <div class="row">
   <div class="col-md-12">
     <form action="/categories/edit/<%= category._id %>" method="post">
+      <% if (error_message.length === 0) { %>
         <div class="form-group">
-          <label for="text">Title</label>
+          <label for="title">Title</label>
           <input class="form-control" type="text" name="title" value="<%= category.title %>">
         </div>
         <div class="form-group">
@@ -15,7 +16,44 @@
         <button class="btn btn-primary" name="submit" type="submit">Save</button>
         <a class="btn btn-secondary" href="/manage/categories">Back</a>
         <a class="btn btn-danger float-right category-delete" href="/manage/categories" data-cat-id="<%= category._id %>" >Delete</a>
-      </form>
+      <% } else { %>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <p>
+            Please check the form
+            <br>
+          </p>
+          <ul>
+            <% for (message in error_message){ %>
+              <% obj = error_message[message]; %>
+              <li><%= obj.msg %></li>
+            <% } %>
+          </ul>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="form-group">
+          <label for="title">Title</label>
+          <% if (error_message.title) { %>
+            <input class="form-control is-invalid" type="text" name="title" placeholder="Insert the category description" value="<%= category.title %>">
+          <% } else {%>
+            <input class="form-control" type="text" name="title" value="<%= category.title %>">
+          <% } %>
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <% if (error_message.description) { %>
+            <textarea class="form-control is-invalid" name="description" placeholder="Insert the category description"><%= category.description %></textarea>
+          <% } else {%>
+            <textarea class="form-control" name="description" placeholder="Insert the category description"><%= category.description %></textarea>
+          <% } %>
+        </div>
+        <br>
+        <button class="btn btn-primary" name="submit" type="submit">Save</button>
+        <a class="btn btn-danger" href="/manage/categories">Back</a>
+        <a class="btn btn-danger float-right category-delete" href="/manage/categories" data-cat-id="<%= category._id %>" >Delete</a>
+      <% } %>
+    </form>
   </div>
 </div>
 <% include ../views/partials/footer %>

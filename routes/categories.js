@@ -56,7 +56,6 @@ router.post('/edit/:id', [
 ], (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    console.log('errors');
     const category = {
       title:  req.body.title,
       description: req.body.description,
@@ -67,7 +66,6 @@ router.post('/edit/:id', [
       category: category,
       error_message: errors.mapped()
     });
-    console.log(category);
 
   // if (!errors.isEmpty()) {
   //   res.render('edit_category', {
@@ -86,7 +84,7 @@ router.post('/edit/:id', [
       if (err) {
         res.send(err);
       }
-      req.flash('success', 'Category Edited');
+      req.flash('success', 'Category Updated');
       res.redirect('/manage/categories');
     });
   }

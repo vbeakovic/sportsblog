@@ -56,7 +56,8 @@ router.get('/categories/edit/:id', (req, res, next) => {
     }
     res.render('edit_category', {
       title: 'Edit Category',
-      category: category
+      category: category,
+      error_message: ''
     });
   });
 
