@@ -120,10 +120,9 @@ router.delete('/delete/:id', (req, res, next) => {
   Article.removeArticle(query, (err, article) => {
     if (err) {
       res.send(err);
-          console.log('Test2');
     }
+    req.flash('success', 'Article Deleted');
     res.sendStatus(200);
-    console.log('Test');
   });
 });
 

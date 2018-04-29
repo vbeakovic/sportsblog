@@ -91,17 +91,14 @@ router.post('/edit/:id', [
 
 // Delete category - DELETE
 router.delete('/delete/:id', (req, res, next) => {
-  console.log('Request received');
   const query = {_id: req.params.id};
 
   Category.removeCategory(query, (err, category) => {
     if (err) {
       res.send(err);
-          console.log('Test2');
     }
     req.flash('success', 'Category Deleted');
     res.sendStatus(200);
-    console.log('Test');
   });
 });
 
