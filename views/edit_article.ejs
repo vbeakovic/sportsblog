@@ -2,7 +2,8 @@
 <h1><%= title %></h1>
 <div class="row">
   <div class="col-md-12">
-    <form action="/articles/edit/<%= article._id %>" method="post">
+      <% if (error_message.length === 0) { %>
+        <form action="/articles/edit/<%= article._id %>" method="post">
         <div class="form-group">
           <label for="title">Title</label>
           <input class="form-control" type="text" name="title" value="<%= article.title %>">
@@ -35,7 +36,73 @@
         <button class="btn btn-primary" name="submit" type="submit">Save</button>
         <a class="btn btn-secondary" href="/manage/articles">Back</a>
         <a class="btn btn-danger float-right article-delete" href="/manage/articles" data-article-id="<%= article._id %>" >Delete</a>
-      </form>
+        </form>
+        <% } else { %>
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <p>
+              Please check the form
+              <br>
+            </p>
+            <ul>
+              <% for (message in error_message){ %>
+                <% obj = error_message[message]; %>
+                <li><%= obj.msg %></li>
+              <% } %>
+            </ul>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="/articles/edit/<%= article_id %>" method="post">
+          <div class="form-group">
+            <label for="title">Title</label>
+            <% if (error_message.title) { %>
+              <input class="form-control is-invalid" type="text" name="title" placeholder="Insert the article title" value="<%= article_title %>">
+            <% } else {%>
+              <input class="form-control" type="text" name="title" value="<%= article_title %>">
+            <% } %>
+          </div>
+          <div class="form-group">
+            <label for="subtitle">Subtitle</label>
+            <% if (error_message.subtitle) { %>
+              <input class="form-control is-invalid" type="text" name="subtitle" placeholder="Insert the article subtitle" value="<%= article_subtitle %>">
+            <% } else {%>
+              <input class="form-control" type="text" name="subtitle" value="<%= article_subtitle %>">
+            <% } %>
+          </div>
+          <div class="form-group">
+            <label for="category">Select Category</label>
+            <select class="form-control" name="category">
+              <% categories.forEach(function(category){ %>
+                <% if (category._id == article_category) { %>
+                  <option value="<%= category._id %>" selected><%= category.title %></option>
+                <% } else { %>
+                  <option value="<%= category._id %>"><%= category.title %></option>
+                <% } %>
+              <% }) %>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="author">Author</label>
+            <% if (error_message.author) { %>
+              <input class="form-control is-invalid" type="text" name="author" placeholder="Insert the author details" value="<%= article_author %>">
+            <% } else {%>
+              <input class="form-control" type="text" name="author" value="<%= article_author %>">
+            <% } %>
+          </div>
+          <div class="form-group">
+            <label for="body">Body</label>
+            <% if (error_message.author) { %>
+              <textarea class="form-control is-invalid" name="body" placeholder="Insert the article text" rows="10"><%= article_body %></textarea>
+            <% } else {%>
+              <textarea class="form-control" name="body" rows="10"><%= article_body %></textarea>
+            <% } %>
+          </div>
+          <br>
+          <button class="btn btn-primary" name="submit" type="submit">Save</button>
+          <a class="btn btn-danger" href="/manage/articles">Back</a>
+          </form>
+        <% } %>
   </div>
 </div>
 <% include ../views/partials/footer %>

@@ -68,23 +68,48 @@ router.post('/add', [
 });
 
 // Update article - POST
-router.post('/edit/:id', (req, res, next) => {
-  let article = new Article();
-  const query = {_id: req.params.id};
-  const update = {
-    title: req.body.title,
-    subtitle: req.body.subtitle,
-    category: req.body.category,
-    body: req.body.body,
-    author: req.body.author
-  }
-
-  Article.updateArticle(query, update, {}, (err, article) => {
-    if (err) {
-      res.send(err);
+router.post('/edit/:id', [
+  check('title').not().isEmpty().withMessage('The title cannot be empty'),
+  check('subtitle').not().isEmpty().withMessage('The subtitle cannot be empty'),
+  check('author').not().isEmpty().withMessage('The author cannot be empty'),
+  check('body').not().isEmpty().withMessage('The body cannot be empty')
+], (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    Category.getCategories((err, categories) => {
+      if (err) {
+        console.log(err);
+      }
+      res.render('edit_article', {
+        title: 'Edit Article',
+        article_id: req.params.id,
+        article_title: req.body.title,
+        article_subtitle: req.body.subtitle,
+        article_author: req.body.author,
+        article_category: req.body.category,
+        article_body: req.body.body,
+        categories: categories,
+        error_message: errors.mapped()
+      });
+    });
+  } else {
+    let article = new Article();
+    const query = {_id: req.params.id};
+    const update = {
+      title: req.body.title,
+      subtitle: req.body.subtitle,
+      category: req.body.category,
+      body: req.body.body,
+      author: req.body.author
     }
-    res.redirect('/manage/articles');
-  });
+    Article.updateArticle(query, update, {}, (err, article) => {
+      if (err) {
+        res.send(err);
+      }
+      req.flash('success', 'Article Updated');
+      res.redirect('/manage/articles');
+    });
+  }
 });
 
 // Delete article - DELETE
