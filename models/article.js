@@ -71,3 +71,12 @@ module.exports.updateArticle = function(query, update, options, callback) {
 module.exports.removeArticle = function(query, callback) {
   Article.remove(query, callback);
 }
+
+// Add comment
+module.exports.addComment = function(query, comment, callback) {
+  Article.update(query, {
+    $push: {
+      comment: comment
+    }
+  }, callback);
+}

@@ -1,9 +1,105 @@
 <% include ../views/partials/header %>
-<h1><%= title %></h1>
+
 <div class="row">
-  <div class="col-md-5">
-  </div>
-  <div class="col-md-7">
+  <div class="col-md-12">
+    <h1 name="title"><%= article.title %></h1>
+    <h4 name="subtitle"><%= article.subtitle %></h4>
+    <p>
+      Posted by <%= article.author %>
+      on <%= moment(article.created_at).format('MMMM Do YYYY, h:mm:ss a') %>
+    </p>
+    <p>
+      <%= article.body %>
+    </p>
+    <hr>
+    <h4>Add Comment</h4>
+    <p>
+      <form action="/articles/comments/add/<%= article._id %>" method="post">
+        <% if (error_message.length === 0) { %>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input class="form-control" type="text" name="subject">
+          </div>
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input class="form-control" type="text" name="name">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input class="form-control" type="text" name="email">
+          </div>
+          <div class="form-group">
+            <label for="body">Body</label>
+            <textarea class="form-control" name="body" rows="5"></textarea>
+          </div>
+          <br>
+          <button class="btn btn-secondary" name="submit" type="submit">Add Comment</button>
+        <% } else { %>
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <p>
+              Please check the form
+              <br>
+            </p>
+            <ul>
+              <% for (message in error_message){ %>
+                <% obj = error_message[message]; %>
+                <li><%= obj.msg %></li>
+              <% } %>
+            </ul>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <% if (error_message.subject) { %>
+                <input class="form-control is-invalid" type="text" name="subject" value="<%= comment.subject %>">
+              <% } else { %>
+                <input class="form-control" type="text" name="subject" value="<%= comment.subject %>">
+              <% } %>
+            </div>
+            <div class="form-group">
+              <label for="name">Name</label>
+              <% if (error_message.name) { %>
+                <input class="form-control is-invalid" type="text" name="name" value="<%= comment.name %>">
+              <% } else { %>
+                <input class="form-control" type="text" name="name" value="<%= comment.name %>">
+              <% } %>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <% if (error_message.email) { %>
+                <input class="form-control is-invalid" type="text" name="email" value="<%= comment.email %>">
+              <% } else { %>
+                <input class="form-control" type="text" name="email" value="<%= comment.email %>">
+              <% } %>
+            </div>
+            <div class="form-group">
+              <label for="body">Body</label>
+              <% if (error_message.body) { %>
+                <textarea class="form-control is-invalid" name="body" rows="5"><%= comment.body%></textarea>
+              <% } else { %>
+                <textarea class="form-control" name="body" rows="5"><%= comment.body%></textarea>
+              <% } %>
+            </div>
+            <br>
+            <button class="btn btn-secondary" name="submit" type="submit">Add Comment</button>
+        <% } %>
+      </form>
+    </p>
+    <br>
+    <br>
+    <h4>Comments</h4>
+    <% article['comment'].forEach(function(comment_one) { %>
+        <div class="card bg-light mb-12" >
+          <div class="card-header"><%= comment_one.comment_subject %></div>
+          <div class="card-body">
+            <h5 class="card-title">Posted by <%= comment_one.comment_author %></h5>
+            <p class="card-text"><%= comment_one.comment_body %></p>
+          </div>
+        </div>
+        <br>
+    <% }); %>
   </div>
 </div>
 <% include ../views/partials/footer %>
