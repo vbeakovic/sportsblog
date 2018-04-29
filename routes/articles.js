@@ -6,18 +6,21 @@ const { matchedData, sanitize } = require('express-validator/filter');
 Category = require('../models/category.js');
 Article = require('../models/article.js');
 
+// Get articles - GET
 router.get('/', (req, res, next) => {
   res.render('articles', {
     title: 'Articles'
   });
 });
 
+// Show single article - GET
 router.get('/show/:id', (req, res, next) => {
   res.render('article', {
     title: 'Article'
   });
 });
 
+// Show articles of specific category - GET
 router.get('/category/:category_id', (req, res, next) => {
   res.render('articles', {
     title: 'Category Articles'
