@@ -76,7 +76,8 @@ router.get('/articles/edit/:id', (req, res, next) => {
       res.render('edit_article', {
         title: 'Edit Article',
         article: article,
-        categories, categories
+        categories, categories,
+        error_message: []
       });
     })
   })
