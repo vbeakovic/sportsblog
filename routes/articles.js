@@ -8,9 +8,16 @@ Article = require('../models/article.js');
 
 // Get articles - GET
 router.get('/', (req, res, next) => {
-  res.render('articles', {
-    title: 'Articles'
+  Article.getArticles( (err, articles) => {
+    if (err) {
+      console.log(err);
+    }
+    res.render('articles', {
+      title: 'Articles',
+      articles: articles
+    });
   });
+
 });
 
 // Show single article - GET
@@ -22,8 +29,19 @@ router.get('/show/:id', (req, res, next) => {
 
 // Show articles of specific category - GET
 router.get('/category/:category_id', (req, res, next) => {
-  res.render('articles', {
-    title: 'Category Articles'
+  Article.getCategoryArticles(req.params.category_id, (err, articles) => {
+    if (err) {
+      console.log(err);
+    }
+    Category.getCategoryById(req.params.category_id, (err, category) => {
+      if (err) {
+        console.log(err);
+      }
+      res.render('articles', {
+        title: category.title + ' Articles',
+        articles: articles
+      });
+    })
   });
 });
 

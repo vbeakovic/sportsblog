@@ -7,9 +7,16 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-5">
-  </div>
-  <div class="col-md-7">
+  <div class="col-md-12">
+    <% articles.forEach(function(article) { %>
+      <a href="/articles/show/<%= article._id %>"><h2><%= article.title %></h2></a>
+      <h4><%= article.subtitle %></h4>
+      <p>
+        Posted by <%= article.author %>
+        on <%= moment(article.created_at).format('MMMM Do YYYY, h:mm:ss a') %>
+      </p>
+      <hr>
+    <% }) %>
   </div>
 </div>
 <% include ../views/partials/footer %>
