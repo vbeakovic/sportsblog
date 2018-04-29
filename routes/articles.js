@@ -62,6 +62,7 @@ router.post('/add', [
       if (err) {
         res.send(err);
       }
+      req.flash('success', 'Article Created');
       res.redirect('/manage/articles');
     });
   }
