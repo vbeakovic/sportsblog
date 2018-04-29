@@ -1,3 +1,11 @@
 .add-category{
   margin-top: 10px;
 }
+
+#front_jumbo {
+  background:url('/img/home-bg.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: white;
+  min-height: 400px;
+}
